@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors'
 import config from './config';
+import { userRouter } from './module/user/user.route';
 
 const app: Application = express();
 app.use(cors({
@@ -13,6 +14,9 @@ app.use(express.json());
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+//Auth api
+app.use('/api/auth', userRouter)
 
 
 
