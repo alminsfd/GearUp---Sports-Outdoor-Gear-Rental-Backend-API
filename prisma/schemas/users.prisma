@@ -1,5 +1,5 @@
 model User {
-  id            String         @id @default(uuid)
+  id            String         @id @default(uuid())
   email         String         @unique
   password      String         // Hashed password
   name          String
@@ -15,7 +15,7 @@ model User {
   gears        GearItem[]    @relation("ProviderGears")
   rentalOrders RentalOrder[] @relation("CustomerRentals")
   reviews      Review[]      @relation("CustomerReviews")
-  payments      Payment[]
+//   payments      Payment[]
 
   @@map("users")
 
