@@ -8,3 +8,5 @@ export interface ICreategeartPayload {
      isAvailable?: boolean;
      images?: string[];
 }
+
+export type IUpdateGearPayload = Partial<ICreategeartPayload>;

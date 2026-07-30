@@ -18,6 +18,42 @@ const creategear = catchAsync(async (req: Request, res: Response, next: NextFunc
      });
 });
 
+
+// Update Gear
+const updateGear = catchAsync(async (req: Request, res: Response) => {
+     const id = req.params.id as string;
+     const providerId = req.user?.id as string;
+     const payload = req.body;
+
+     const result = await gearService.updateGearInDb(id, payload, providerId);
+
+     sendResponse(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Gear listing updated successfully",
+          data: result,
+     });
+});
+
+// Delete Gear
+const deleteGear = catchAsync(async (req: Request, res: Response) => {
+     const id = req.params.id as string;
+     const providerId = req.user?.id as string;
+
+     const result = await gearService.deleteGearFromDb(id, providerId);
+
+     sendResponse(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Gear removed from inventory successfully",
+          data: result,
+     });
+});
+
+
+
 export const gearController = {
      creategear,
+     updateGear,
+     deleteGear,
 };
