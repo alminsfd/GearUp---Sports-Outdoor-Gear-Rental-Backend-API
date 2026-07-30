@@ -4,6 +4,7 @@ import cors from 'cors'
 import config from './config';
 import { authRouter } from './module/auth/auth.route';
 import { userRoutes } from './module/user/user.route';
+import { gearRouter } from './module/gearItems/gear.route';
 
 const app: Application = express();
 app.use(cors({
@@ -20,6 +21,8 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter)
 //user api
 app.use("/api/users", userRoutes)
+//provider api
+app.use('/api/gear', gearRouter)
 
 
 
