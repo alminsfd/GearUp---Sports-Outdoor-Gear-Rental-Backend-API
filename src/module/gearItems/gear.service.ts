@@ -1,5 +1,6 @@
+import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
-import { ICreategeartPayload, IUpdateGearPayload } from "./gear.interface";
+import { ICreategeartPayload, IGearFilters, IPaginationOptions, IUpdateGearPayload } from "./gear.interface";
 
 const creategearOnDb = async (payload: ICreategeartPayload, userId: string) => {
      // findUniqueOrThrow 
@@ -76,10 +77,144 @@ const deleteGearFromDb = async (gearId: string, providerId: string) => {
      return result;
 };
 
+// 1. Get All Gear with Filters & Pagination
+const getAllGearsFromDb = async (
+     filters: IGearFilters,
+     paginationOptions: IPaginationOptions
+) => {
+     const { searchTerm, category, brand, minPrice, maxPrice, isAvailable } = filters;
+     const { page = 1, limit = 10, sortBy = "createdAt", sortOrder = "desc" } = paginationOptions;
+
+     const skip = (Number(page) - 1) * Number(limit);
+     const take = Number(limit);
+
+     // Dynamic Query Building
+     const whereConditions: Prisma.GearItemWhereInput[] = [];
+
+     // Search by title or description
+     if (searchTerm) {
+          whereConditions.push({
+               OR: [
+                    { title: { contains: searchTerm, mode: "insensitive" } },
+                    { description: { contains: searchTerm, mode: "insensitive" } },
+               ],
+          });
+     }
+
+     // Filter by Category (Name or ID)
+     if (category) {
+          whereConditions.push({
+               OR: [
+                    { categoryId: category },
+                    { category: { name: { contains: category, mode: "insensitive" } } },
+               ],
+          });
+     }
+
+     // Filter by Brand
+     if (brand) {
+          whereConditions.push({
+               brand: { equals: brand, mode: "insensitive" },
+          });
+     }
+
+     // Filter by Availability
+     if (isAvailable !== undefined) {
+          whereConditions.push({
+               isAvailable: isAvailable,
+          });
+     }
+
+     // Filter by Price Range
+     if (minPrice !== undefined || maxPrice !== undefined) {
+          whereConditions.push({
+               pricePerDay: {
+                    gte: minPrice !== undefined ? Number(minPrice) : undefined,
+                    lte: maxPrice !== undefined ? Number(maxPrice) : undefined,
+               },
+          });
+     }
+
+     const whereClause: Prisma.GearItemWhereInput =
+          whereConditions.length > 0 ? { AND: whereConditions } : {};
+
+     // Fetch Data & Total Count
+     const result = await prisma.gearItem.findMany({
+          where: whereClause,
+          include: {
+               category: {
+                    select: {
+                         id: true,
+                         name: true,
+                    },
+               },
+               provider: {
+                    select: {
+                         id: true,
+                         name: true,
+                         email: true,
+                    },
+               },
+          },
+          skip,
+          take,
+          orderBy: {
+               [sortBy]: sortOrder,
+          },
+     });
+
+     const total = await prisma.gearItem.count({ where: whereClause });
+
+     return {
+          meta: {
+               page: Number(page),
+               limit: Number(limit),
+               total,
+               totalPage: Math.ceil(total / Number(limit)),
+          },
+          data: result,
+     };
+};
+
+// 2. Get Single Gear Details by ID
+const getSingleGearFromDb = async (id: string) => {
+     const result = await prisma.gearItem.findUnique({
+          where: { id },
+          include: {
+               category: true,
+               provider: {
+                    select: {
+                         id: true,
+                         name: true,
+                         email: true,
+                         phone: true,
+                    },
+               },
+               reviews: {
+                    include: {
+                         customer: {
+                              select: {
+                                   id: true,
+                                   name: true,
+                              },
+                         },
+                    },
+               },
+          },
+     });
+
+     if (!result) {
+          throw new Error("Gear item not found!");
+     }
+
+     return result;
+};
 
 
 export const gearService = {
      creategearOnDb,
      updateGearInDb,
-     deleteGearFromDb
+     deleteGearFromDb,
+     getSingleGearFromDb,
+     getAllGearsFromDb
 }              

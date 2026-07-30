@@ -5,6 +5,9 @@ import { gearController } from "./gear.controller";
 
 const router = Router();
 
+router.get("/", gearController.getAllGears);
+router.get("/:id", gearController.getSingleGear);
+
 router.post(
      "/provider",
      auth(UserRole.ADMIN, UserRole.PROVIDER),

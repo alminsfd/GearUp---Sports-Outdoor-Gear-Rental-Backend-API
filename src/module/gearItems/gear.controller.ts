@@ -50,10 +50,67 @@ const deleteGear = catchAsync(async (req: Request, res: Response) => {
      });
 });
 
+// Get All Gear
+const getAllGears = catchAsync(async (req: Request, res: Response) => {
+     const {
+          searchTerm,
+          category,
+          brand,
+          minPrice,
+          maxPrice,
+          isAvailable,
+          page,
+          limit,
+          sortBy,
+          sortOrder,
+     } = req.query;
+
+     const filters = {
+          searchTerm: searchTerm as string,
+          category: category as string,
+          brand: brand as string,
+          minPrice: minPrice ? Number(minPrice) : undefined,
+          maxPrice: maxPrice ? Number(maxPrice) : undefined,
+          isAvailable: isAvailable ? isAvailable === "true" : undefined,
+     };
+
+     const paginationOptions = {
+          page: page ? Number(page) : undefined,
+          limit: limit ? Number(limit) : undefined,
+          sortBy: sortBy as string,
+          sortOrder: sortOrder as "asc" | "desc",
+     };
+
+     const result = await gearService.getAllGearsFromDb(filters, paginationOptions);
+
+     sendResponse(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Gears fetched successfully",
+          meta: result.meta,
+          data: result.data,
+     });
+});
+
+// Get Single Gear Details
+const getSingleGear = catchAsync(async (req: Request, res: Response) => {
+     const { id } = req.params;
+
+     const result = await gearService.getSingleGearFromDb(id as string);
+
+     sendResponse(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Gear details fetched successfully",
+          data: result,
+     });
+});
 
 
 export const gearController = {
      creategear,
      updateGear,
      deleteGear,
+     getAllGears,
+     getSingleGear
 };
