@@ -3,6 +3,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors'
 import config from './config';
 import { authRouter } from './module/auth/auth.route';
+import { userRoutes } from './module/user/user.route';
 
 const app: Application = express();
 app.use(cors({
@@ -17,6 +18,8 @@ app.use(cookieParser());
 
 //Auth api
 app.use('/api/auth', authRouter)
+//user api
+app.use("/api/users", userRoutes)
 
 
 
