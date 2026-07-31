@@ -18,12 +18,12 @@ const createCategoryInDb = async (payload: ICreateCategoryPayload) => {
      return result;
 };
 
-// ২. Get All Categories (Public)
+//  Get All Categories (Public)
 const getAllCategoriesFromDb = async () => {
      const result = await prisma.category.findMany({
           include: {
                _count: {
-                    select: { gears: true }, // কোন ক্যাটাগরিতে কয়টি গিয়ার আছে তাও দেখতে পারবে
+                    select: { gears: true },
                },
           },
      });
@@ -31,7 +31,7 @@ const getAllCategoriesFromDb = async () => {
      return result;
 };
 
-// ৩. Get Single Category Details (Public)
+// Get Single Category Details (Public)
 const getSingleCategoryFromDb = async (id: string) => {
      const result = await prisma.category.findUnique({
           where: { id },
@@ -47,7 +47,7 @@ const getSingleCategoryFromDb = async (id: string) => {
      return result;
 };
 
-// ৪. Update Category (Admin / Provider)
+//  Update Category (Admin / Provider)
 const updateCategoryInDb = async (id: string, payload: IUpdateCategoryPayload) => {
      const isCategoryExist = await prisma.category.findUnique({
           where: { id },
@@ -57,7 +57,7 @@ const updateCategoryInDb = async (id: string, payload: IUpdateCategoryPayload) =
           throw new Error("Category not found!");
      }
 
-     // নাম আপডেট করতে চাইলে একই নামের অন্য ক্যাটাগরি আছে কি না চেক করা
+
      if (payload.name) {
           const isNameTaken = await prisma.category.findUnique({
                where: { name: payload.name },
@@ -76,7 +76,7 @@ const updateCategoryInDb = async (id: string, payload: IUpdateCategoryPayload) =
      return result;
 };
 
-// ৫. Delete Category (Admin / Provider)
+//  Delete Category (Admin / Provider)
 const deleteCategoryFromDb = async (id: string) => {
      const isCategoryExist = await prisma.category.findUnique({
           where: { id },
