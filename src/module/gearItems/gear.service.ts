@@ -102,14 +102,14 @@ const getAllGearsFromDb = async (
      }
 
      // Filter by Category (Name or ID)
-     // if (category) {
-     //      whereConditions.push({
-     //           OR: [
-     //                { categoryId: category },
-     //                { category: { name: { contains: category, mode: "insensitive" } } },
-     //           ],
-     //      });
-     // }
+     if (category) {
+          whereConditions.push({
+               OR: [
+                    { categoryId: category },
+                    { category: { name: { contains: category, mode: "insensitive" } } },
+               ],
+          });
+     }
 
      // Filter by Brand
      // if (brand) {
