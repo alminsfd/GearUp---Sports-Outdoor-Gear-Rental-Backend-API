@@ -6,6 +6,8 @@ import { authRouter } from './module/auth/auth.route';
 import { userRoutes } from './module/user/user.route';
 import { gearRouter } from './module/gearItems/gear.route';
 import { categoryRouter } from './module/category/catagory.route';
+import { rentalRouter } from './module/rentalorder/rental.route';
+import { reviewRouter } from './module/review/review.route';
 
 const app: Application = express();
 app.use(cors({
@@ -26,6 +28,11 @@ app.use("/api/users", userRoutes)
 app.use('/api/gear', gearRouter)
 //category api
 app.use('/api/categories', categoryRouter)
+//rental order
+app.use('/api/rentals', rentalRouter)
+//reviews
+app.use('/api/reviews', reviewRouter)
+
 
 
 

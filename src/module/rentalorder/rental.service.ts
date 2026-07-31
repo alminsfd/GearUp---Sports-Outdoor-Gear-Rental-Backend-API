@@ -140,6 +140,12 @@ const updateOrderStatusInDb = async (
           throw new Error("Rental order not found!");
      }
 
+     if (order.status === OrderStatus.CANCELLED) {
+          throw new Error("Cannot update status! This order has already been cancelled.");
+     }
+     if (order.status === OrderStatus.RETURNED) {
+          throw new Error("Cannot update status! This rental order is already returned.");
+     }
      // Customer can only cancel (if in PLACED status)
      if (role === "CUSTOMER") {
           if (order.customerId !== userId) {
