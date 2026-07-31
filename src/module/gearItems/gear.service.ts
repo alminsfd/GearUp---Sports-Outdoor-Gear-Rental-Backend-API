@@ -135,35 +135,35 @@ const getAllGearsFromDb = async (
           });
      }
 
-     // const whereClause: Prisma.GearItemWhereInput =
-     //      whereConditions.length > 0 ? { AND: whereConditions } : {};
+     const whereClause: Prisma.GearItemWhereInput =
+          whereConditions.length > 0 ? { AND: whereConditions } : {};
 
      // Fetch Data & Total Count
-     // const result = await prisma.gearItem.findMany({
-     //      where: whereClause,
-     //      include: {
-     //           category: {
-     //                select: {
-     //                     id: true,
-     //                     name: true,
-     //                },
-     //           },
-     //           provider: {
-     //                select: {
-     //                     id: true,
-     //                     name: true,
-     //                     email: true,
-     //                },
-     //           },
-     //      },
-     //      skip,
-     //      take,
-     //      orderBy: {
-     //           [sortBy]: sortOrder,
-     //      },
-     // });
+     const result = await prisma.gearItem.findMany({
+          where: whereClause,
+          include: {
+               category: {
+                    select: {
+                         id: true,
+                         name: true,
+                    },
+               },
+               provider: {
+                    select: {
+                         id: true,
+                         name: true,
+                         email: true,
+                    },
+               },
+          },
+          skip,
+          take,
+          orderBy: {
+               [sortBy]: sortOrder,
+          },
+     });
 
-     // const total = await prisma.gearItem.count({ where: whereClause });
+     const total = await prisma.gearItem.count({ where: whereClause });
 
      return {
           meta: {
