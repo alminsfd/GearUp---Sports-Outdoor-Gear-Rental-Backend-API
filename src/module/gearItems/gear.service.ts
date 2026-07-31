@@ -112,11 +112,11 @@ const getAllGearsFromDb = async (
      }
 
      // Filter by Brand
-     // if (brand) {
-     //      whereConditions.push({
-     //           brand: { equals: brand, mode: "insensitive" },
-     //      });
-     // }
+     if (brand) {
+          whereConditions.push({
+               brand: { equals: brand, mode: "insensitive" },
+          });
+     }
 
      // Filter by Availability
      // if (isAvailable !== undefined) {
