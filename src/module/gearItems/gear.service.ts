@@ -119,21 +119,21 @@ const getAllGearsFromDb = async (
      }
 
      // Filter by Availability
-     // if (isAvailable !== undefined) {
-     //      whereConditions.push({
-     //           isAvailable: isAvailable,
-     //      });
-     // }
+     if (isAvailable !== undefined) {
+          whereConditions.push({
+               isAvailable: isAvailable,
+          });
+     }
 
      // Filter by Price Range
-     // if (minPrice !== undefined || maxPrice !== undefined) {
-     //      whereConditions.push({
-     //           pricePerDay: {
-     //                gte: minPrice !== undefined ? Number(minPrice) : undefined,
-     //                lte: maxPrice !== undefined ? Number(maxPrice) : undefined,
-     //           },
-     //      });
-     // }
+     if (minPrice !== undefined || maxPrice !== undefined) {
+          whereConditions.push({
+               pricePerDay: {
+                    gte: minPrice !== undefined ? Number(minPrice) : undefined,
+                    lte: maxPrice !== undefined ? Number(maxPrice) : undefined,
+               },
+          });
+     }
 
      // const whereClause: Prisma.GearItemWhereInput =
      //      whereConditions.length > 0 ? { AND: whereConditions } : {};
