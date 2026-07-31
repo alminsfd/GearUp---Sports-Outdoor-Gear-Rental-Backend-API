@@ -27,4 +27,19 @@ router.delete(
      gearController.deleteGear
 );
 
+//  Update Stock (Provider & Admin)
+router.patch(
+     "/provider/gear/:id/stock",
+     auth(UserRole.PROVIDER, UserRole.ADMIN),
+     gearController.updateStock
+);
+
+//  Update Availability Status (Provider & Admin)
+router.patch(
+     "/provider/gear/:id/availability",
+     auth(UserRole.PROVIDER, UserRole.ADMIN),
+     gearController.updateAvailability
+);
+
+
 export const gearRouter = router; 

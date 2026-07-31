@@ -1,6 +1,6 @@
 import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
-import { ICreategeartPayload, IGearFilters, IPaginationOptions, IUpdateGearPayload } from "./gear.interface";
+import { ICreategeartPayload, IGearFilters, IPaginationOptions, IUpdateAvailabilityPayload, IUpdateGearPayload, IUpdateStockPayload } from "./gear.interface";
 
 const creategearOnDb = async (payload: ICreategeartPayload, userId: string) => {
      // findUniqueOrThrow 
@@ -211,10 +211,87 @@ const getSingleGearFromDb = async (id: string) => {
 };
 
 
+const updateStockInDb = async (
+     gearId: string,
+     payload: IUpdateStockPayload,
+     providerId: string
+) => {
+     const { stock } = payload;
+
+     if (stock < 0) {
+          throw new Error("Stock count cannot be negative!");
+     }
+
+     // ownwership check
+     const gear = await prisma.gearItem.findUnique({
+          where: { id: gearId },
+     });
+
+     if (!gear) {
+          throw new Error("Gear item not found!");
+     }
+
+     if (gear.providerId !== providerId) {
+          throw new Error("Unauthorized! You can only update stock for your own gear.");
+     }
+
+     // automatic available change
+     const isAvailable = stock > 0 ? gear.isAvailable : false;
+
+     const result = await prisma.gearItem.update({
+          where: { id: gearId },
+          data: {
+               stock,
+               isAvailable,
+          },
+     });
+
+     return result;
+};
+
+// 2. Toggle Availability Status
+const updateAvailabilityInDb = async (
+     gearId: string,
+     payload: IUpdateAvailabilityPayload,
+     providerId: string
+) => {
+     const { isAvailable } = payload;
+
+     // ownwership check
+     const gear = await prisma.gearItem.findUnique({
+          where: { id: gearId },
+     });
+
+     if (!gear) {
+          throw new Error("Gear item not found!");
+     }
+
+     if (gear.providerId !== providerId) {
+          throw new Error("Unauthorized! You can only update availability for your own gear.");
+     }
+
+
+     if (isAvailable && gear.stock <= 0) {
+          throw new Error("Cannot make gear available when stock is 0! Update stock first.");
+     }
+
+     const result = await prisma.gearItem.update({
+          where: { id: gearId },
+          data: {
+               isAvailable,
+          },
+     });
+
+     return result;
+};
+
+
 export const gearService = {
      creategearOnDb,
      updateGearInDb,
      deleteGearFromDb,
      getSingleGearFromDb,
-     getAllGearsFromDb
+     getAllGearsFromDb,
+     updateStockInDb,
+     updateAvailabilityInDb
 }              

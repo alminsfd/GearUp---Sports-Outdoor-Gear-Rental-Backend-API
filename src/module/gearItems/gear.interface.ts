@@ -25,4 +25,12 @@ export interface IPaginationOptions {
      sortOrder?: 'asc' | 'desc';
 }
 
+export interface IUpdateStockPayload {
+     stock: number;
+}
+
+export interface IUpdateAvailabilityPayload {
+     isAvailable: boolean;
+}
+
 export type IUpdateGearPayload = Partial<ICreategeartPayload>;

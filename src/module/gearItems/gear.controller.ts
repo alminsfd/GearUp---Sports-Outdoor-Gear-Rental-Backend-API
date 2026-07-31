@@ -106,11 +106,44 @@ const getSingleGear = catchAsync(async (req: Request, res: Response) => {
      });
 });
 
+// manage stock status
+
+const updateStock = catchAsync(async (req: Request, res: Response) => {
+     const { id } = req.params;
+     const providerId = req.user?.id as string;
+
+     const result = await gearService.updateStockInDb(id as string, req.body, providerId);
+
+     sendResponse(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Gear stock updated successfully",
+          data: result,
+     });
+});
+
+// Manage Availability Status
+const updateAvailability = catchAsync(async (req: Request, res: Response) => {
+     const { id } = req.params;
+     const providerId = req.user?.id as string;
+
+     const result = await gearService.updateAvailabilityInDb(id as string , req.body, providerId);
+
+     sendResponse(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Gear availability updated successfully",
+          data: result,
+     });
+});
+
 
 export const gearController = {
      creategear,
      updateGear,
      deleteGear,
      getAllGears,
-     getSingleGear
+     getSingleGear,
+     updateStock,
+     updateAvailability
 };
