@@ -92,78 +92,78 @@ const getAllGearsFromDb = async (
      const whereConditions: Prisma.GearItemWhereInput[] = [];
 
      // Search by title or description
-     if (searchTerm) {
-          whereConditions.push({
-               OR: [
-                    { title: { contains: searchTerm, mode: "insensitive" } },
-                    { description: { contains: searchTerm, mode: "insensitive" } },
-               ],
-          });
-     }
+     // if (searchTerm) {
+     //      whereConditions.push({
+     //           OR: [
+     //                { title: { contains: searchTerm, mode: "insensitive" } },
+     //                { description: { contains: searchTerm, mode: "insensitive" } },
+     //           ],
+     //      });
+     // }
 
      // Filter by Category (Name or ID)
-     if (category) {
-          whereConditions.push({
-               OR: [
-                    { categoryId: category },
-                    { category: { name: { contains: category, mode: "insensitive" } } },
-               ],
-          });
-     }
+     // if (category) {
+     //      whereConditions.push({
+     //           OR: [
+     //                { categoryId: category },
+     //                { category: { name: { contains: category, mode: "insensitive" } } },
+     //           ],
+     //      });
+     // }
 
      // Filter by Brand
-     if (brand) {
-          whereConditions.push({
-               brand: { equals: brand, mode: "insensitive" },
-          });
-     }
+     // if (brand) {
+     //      whereConditions.push({
+     //           brand: { equals: brand, mode: "insensitive" },
+     //      });
+     // }
 
      // Filter by Availability
-     if (isAvailable !== undefined) {
-          whereConditions.push({
-               isAvailable: isAvailable,
-          });
-     }
+     // if (isAvailable !== undefined) {
+     //      whereConditions.push({
+     //           isAvailable: isAvailable,
+     //      });
+     // }
 
      // Filter by Price Range
-     if (minPrice !== undefined || maxPrice !== undefined) {
-          whereConditions.push({
-               pricePerDay: {
-                    gte: minPrice !== undefined ? Number(minPrice) : undefined,
-                    lte: maxPrice !== undefined ? Number(maxPrice) : undefined,
-               },
-          });
-     }
+     // if (minPrice !== undefined || maxPrice !== undefined) {
+     //      whereConditions.push({
+     //           pricePerDay: {
+     //                gte: minPrice !== undefined ? Number(minPrice) : undefined,
+     //                lte: maxPrice !== undefined ? Number(maxPrice) : undefined,
+     //           },
+     //      });
+     // }
 
-     const whereClause: Prisma.GearItemWhereInput =
-          whereConditions.length > 0 ? { AND: whereConditions } : {};
+     // const whereClause: Prisma.GearItemWhereInput =
+     //      whereConditions.length > 0 ? { AND: whereConditions } : {};
 
      // Fetch Data & Total Count
-     const result = await prisma.gearItem.findMany({
-          where: whereClause,
-          include: {
-               category: {
-                    select: {
-                         id: true,
-                         name: true,
-                    },
-               },
-               provider: {
-                    select: {
-                         id: true,
-                         name: true,
-                         email: true,
-                    },
-               },
-          },
-          skip,
-          take,
-          orderBy: {
-               [sortBy]: sortOrder,
-          },
-     });
+     // const result = await prisma.gearItem.findMany({
+     //      where: whereClause,
+     //      include: {
+     //           category: {
+     //                select: {
+     //                     id: true,
+     //                     name: true,
+     //                },
+     //           },
+     //           provider: {
+     //                select: {
+     //                     id: true,
+     //                     name: true,
+     //                     email: true,
+     //                },
+     //           },
+     //      },
+     //      skip,
+     //      take,
+     //      orderBy: {
+     //           [sortBy]: sortOrder,
+     //      },
+     // });
 
-     const total = await prisma.gearItem.count({ where: whereClause });
+     // const total = await prisma.gearItem.count({ where: whereClause });
 
      return {
           meta: {
