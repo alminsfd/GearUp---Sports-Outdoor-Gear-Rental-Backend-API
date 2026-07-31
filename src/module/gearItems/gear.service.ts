@@ -92,14 +92,14 @@ const getAllGearsFromDb = async (
      const whereConditions: Prisma.GearItemWhereInput[] = [];
 
      // Search by title or description
-     // if (searchTerm) {
-     //      whereConditions.push({
-     //           OR: [
-     //                { title: { contains: searchTerm, mode: "insensitive" } },
-     //                { description: { contains: searchTerm, mode: "insensitive" } },
-     //           ],
-     //      });
-     // }
+     if (searchTerm) {
+          whereConditions.push({
+               OR: [
+                    { title: { contains: searchTerm, mode: "insensitive" } },
+                    { description: { contains: searchTerm, mode: "insensitive" } },
+               ],
+          });
+     }
 
      // Filter by Category (Name or ID)
      // if (category) {
