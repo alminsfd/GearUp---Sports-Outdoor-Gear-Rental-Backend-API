@@ -8,6 +8,7 @@ import { gearRouter } from './module/gearItems/gear.route';
 import { categoryRouter } from './module/category/catagory.route';
 import { rentalRouter } from './module/rentalorder/rental.route';
 import { reviewRouter } from './module/review/review.route';
+import { adminRouter } from './module/admin/admin.router';
 
 const app: Application = express();
 app.use(cors({
@@ -32,6 +33,8 @@ app.use('/api/categories', categoryRouter)
 app.use('/api/rentals', rentalRouter)
 //reviews
 app.use('/api/reviews', reviewRouter)
+// admin api
+app.use('/api/admin/', adminRouter)
 
 
 
