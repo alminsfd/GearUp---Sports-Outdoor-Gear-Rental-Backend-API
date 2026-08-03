@@ -46,9 +46,9 @@ const getAllUsersFromDb = async (filters: IUserFilterOptions) => {
                _count: {
                     select: {
                          gears: true,
-                         customerRentals: true,
-                    },
-               },
+                         rentalOrders: true,
+                    }
+               }
           },
           skip,
           take,
