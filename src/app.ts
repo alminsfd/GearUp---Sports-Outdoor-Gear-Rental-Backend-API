@@ -11,6 +11,7 @@ import { reviewRouter } from './module/review/review.route';
 import { adminRouter } from './module/admin/admin.router';
 import { globalErrorHandler } from './middleware/globalErrorHandler';
 import { notFound } from './middleware/notFound';
+import { paymentRouter } from './module/payment/payment.route';
 
 const app: Application = express();
 app.use(cors({
@@ -25,6 +26,8 @@ app.use(cookieParser());
 
 //Auth api
 app.use('/api/auth', authRouter)
+//payment api
+app.use("/api/payments", paymentRouter)
 //user api
 app.use("/api/users", userRoutes)
 //provider api
@@ -41,6 +44,7 @@ app.use('/api/admin/', adminRouter)
 app.use(notFound)
 //global error
 app.use(globalErrorHandler)
+
 
 
 
