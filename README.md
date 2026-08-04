@@ -32,6 +32,9 @@
 * **Deployment:** Vercel (Serverless Functions)
 
 ---
+## Admin Email      : admin@rentnest.com
+## Admin Password   : admin123
+---
 
 ## 📁 Project Architecture
 
