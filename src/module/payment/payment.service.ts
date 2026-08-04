@@ -47,7 +47,6 @@ const createPaymentSessionInDb = async (
           total_amount: rentalOrder.totalAmount,
           currency: "BDT",
           tran_id: transactionId,
-          // 🔗SSLCommerz পেমেন্ট শেষে আপনার এই ব্যাকএন্ড URL-গুলোতে POST হিট করবে
           success_url: `${process.env.BACKEND_BASE_URL}/api/payments/confirm?status=success&tran_id=${transactionId}`,
           fail_url: `${process.env.BACKEND_BASE_URL}/api/payments/confirm?status=fail&tran_id=${transactionId}`,
           cancel_url: `${process.env.BACKEND_BASE_URL}/api/payments/confirm?status=cancel&tran_id=${transactionId}`,
@@ -140,7 +139,6 @@ const getUserPaymentHistoryFromDb = async (
      const skip = (Number(page) - 1) * Number(limit);
      const take = Number(limit);
 
-     // RentalOrder-এর কাস্টমার আইডি দিয়ে Payment ফিল্টার করা হচ্ছে
      const payments = await prisma.payment.findMany({
           where: {
                rentalOrder: {
