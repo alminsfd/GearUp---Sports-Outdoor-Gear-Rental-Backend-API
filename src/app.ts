@@ -24,6 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+//welcome api
+app.get('/', (req: Request, res: Response) => {
+     res.send(' Welcome! GearUp - Sports & Outdoor Gear Rental Shop. ');
+});
+
 //Auth api
 app.use('/api/auth', authRouter)
 //payment api
@@ -50,8 +55,6 @@ app.use(globalErrorHandler)
 
 
 
-app.get('/', (req: Request, res: Response) => {
-     res.send(' Welcome! GearUp - Sports & Outdoor Gear Rental Shop. ');
-});
+
 
 export default app
