@@ -49,12 +49,4 @@ app.use('/api/admin/', adminRouter)
 app.use(notFound)
 //global error
 app.use(globalErrorHandler)
-
-
-
-
-
-
-
-
 export default app

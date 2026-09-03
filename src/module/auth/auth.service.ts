@@ -7,7 +7,7 @@ import { JwtPayload, SignOptions } from "jsonwebtoken";
 
 
 const registerUserIntoDB = async (payload: RegisterUserPayload) => {
-     const { role, name, email, password, profileImage } = payload;
+     const { role, name, email, password, profileImage, address, phone } = payload;
      const isUserExist = await prisma.user.findUnique({
           where: { email }
      })
@@ -23,6 +23,8 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
                name,
                role,
                email,
+               address,
+               phone,
                password: hashedPassword,
                profileImage: profileImage
           }

@@ -11,4 +11,6 @@ export interface RegisterUserPayload {
      password: string;
      profileImage?: string;
      role?: UserRole;
+     phone?: string,
+     address?: string,
 }
