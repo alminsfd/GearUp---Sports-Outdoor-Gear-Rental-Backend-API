@@ -1,0 +1,20 @@
+model Checkout {
+     id            String        @id @default(uuid())
+     rentalOrderId String        @unique
+     totalAmount   Float
+     paymentMethod PaymentMethod @default(SSLCOMMERZ)
+     paymentStatus PaymentStatus @default(PENDING)
+
+     // Shipping / Delivery Information
+     fullName      String
+     phoneNumber   String
+     streetAddress String
+     city          String
+     area          String
+     orderNote     String?
+
+     createdAt DateTime @default(now())
+     updatedAt DateTime @updatedAt
+
+     @@map("checkouts")
+}

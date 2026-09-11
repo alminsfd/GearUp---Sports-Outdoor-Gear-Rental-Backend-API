@@ -19,7 +19,6 @@ enum OrderStatus {
 }
 
 enum PaymentMethod {
-     STRIPE
      SSLCOMMERZ
 }
 

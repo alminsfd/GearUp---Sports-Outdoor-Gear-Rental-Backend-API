@@ -12,6 +12,7 @@ import { adminRouter } from './module/admin/admin.router';
 import { globalErrorHandler } from './middleware/globalErrorHandler';
 import { notFound } from './middleware/notFound';
 import { paymentRouter } from './module/payment/payment.route';
+import { checkoutRoutes } from './checkout/checkout.route';
 
 const app: Application = express();
 app.use(cors({
@@ -43,8 +44,10 @@ app.use('/api/categories', categoryRouter)
 app.use('/api/rentals', rentalRouter)
 //reviews
 app.use('/api/reviews', reviewRouter)
+//checkout data
+app.use('/api/checkout', checkoutRoutes)
 // admin api
-app.use('/api/admin/', adminRouter)
+app.use('/api/admin', adminRouter)
 //user not found
 app.use(notFound)
 //global error
