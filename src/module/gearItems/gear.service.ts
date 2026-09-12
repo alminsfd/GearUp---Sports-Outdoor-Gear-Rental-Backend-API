@@ -187,7 +187,7 @@ const getSingleGearFromDb = async (id: string) => {
                          id: true,
                          name: true,
                          email: true,
-                         phone: true,
+                         profileImage: true
                     },
                },
                reviews: {
