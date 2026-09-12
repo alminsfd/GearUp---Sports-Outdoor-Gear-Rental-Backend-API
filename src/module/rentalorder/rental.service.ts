@@ -89,6 +89,25 @@ const getMyRentalOrdersFromDb = async (userId: string, role: string) => {
      }
 };
 
+const checkRentalStatusFromDb = async (userId: string, gearItemId: string) => {
+     const existingOrder = await prisma.rentalOrder.findFirst({
+          where: {
+               customerId: userId,
+               gearItemId: gearItemId,
+          },
+          select: {
+               id: true,
+               status: true,
+               createdAt: true,
+          },
+     });
+
+     return {
+          hasRented: !!existingOrder,
+          rentalData: existingOrder || null,
+     };
+};
+
 // 3. Get Single Rental Order Details
 const getRentalOrderDetailsFromDb = async (orderId: string, userId: string, role: string) => {
      const order = await prisma.rentalOrder.findUnique({
@@ -179,6 +198,7 @@ export const rentalService = {
      getMyRentalOrdersFromDb,
      getRentalOrderDetailsFromDb,
      updateOrderStatusInDb,
+     checkRentalStatusFromDb,
 };
 
 

@@ -48,6 +48,54 @@ const getRentalOrderDetails = catchAsync(async (req: Request, res: Response) => 
      });
 });
 
+// const checkRentalStatus = catchAsync(async (req: Request, res: Response) => {
+//      const userId = req.user?.id as string;
+//      const { gearItemId } = req.query;
+
+//      if (!gearItemId) {
+//           return sendResponse(res, {
+//                statusCode: httpStatus.BAD_REQUEST,
+//                success: false,
+//                message: 'gearItemId must be  required',
+//                data: null,
+//           });
+//      }
+
+//      const result = await rentalService.checkRentalStatusFromDb(
+//           userId as string,
+//           gearItemId as string
+//      );
+
+//      sendResponse(res, {
+//           statusCode: httpStatus.OK,
+//           success: true,
+//           message: 'Rental status checked successfully',
+//           data: result,
+//      });
+// });
+
+
+const checkRentalStatus = catchAsync(async (req: Request, res: Response) => {
+     const userId = req.user?.id as string;
+     const { gearItemId } = req.query;
+
+     if (!gearItemId) {
+          throw new Error("gearItem id must be  required!");
+     }
+
+     const result = await rentalService.checkRentalStatusFromDb(
+          userId,
+          gearItemId as string
+     );
+
+     sendResponse(res, {
+          statusCode: httpStatus.OK,
+          success: true,
+          message: 'Rental status checked successfully',
+          data: result,
+     });
+});
+
 // Update Order Status
 const updateOrderStatus = catchAsync(async (req: Request, res: Response) => {
      const { id } = req.params;
@@ -70,4 +118,5 @@ export const rentalController = {
      getMyRentalOrders,
      getRentalOrderDetails,
      updateOrderStatus,
+     checkRentalStatus
 };

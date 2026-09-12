@@ -5,6 +5,11 @@ import { UserRole } from "../../../generated/prisma/enums";
 
 const router = Router();
 
+//cheked status of rentals (Customar and admin)
+router.get(
+     '/check-status', auth(UserRole.CUSTOMER, UserRole.ADMIN), rentalController.checkRentalStatus
+);
+
 // Place Rental Order (Only Customer)
 router.post(
      "/",
@@ -32,5 +37,7 @@ router.patch(
      auth(UserRole.PROVIDER, UserRole.CUSTOMER, UserRole.ADMIN),
      rentalController.updateOrderStatus
 );
+
+
 
 export const rentalRouter = router;
