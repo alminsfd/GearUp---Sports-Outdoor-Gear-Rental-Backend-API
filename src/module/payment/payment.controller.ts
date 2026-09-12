@@ -25,9 +25,9 @@ const confirmPayment = catchAsync(async (req: Request, res: Response) => {
 
      // Redirect user back to Frontend Payment Result Page
      if (result.status === "SUCCESS") {
-          return res.redirect(`${clientFrontendUrl}/payment/success?txnId=${result.payment.transactionId}`);
+          return res.redirect(`${clientFrontendUrl}/success?txnId=${result.payment.transactionId}`);
      } else {
-          return res.redirect(`${clientFrontendUrl}/payment/fail?txnId=${result.payment.transactionId}`);
+          return res.redirect(`${clientFrontendUrl}/fail?txnId=${result.payment.transactionId}`);
      }
 });
 
