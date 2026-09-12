@@ -1,5 +1,5 @@
-// import app from "./app";
-// export default app
+import app from "./app";
+export default app
 
 
 // import "dotenv/config";

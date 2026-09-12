@@ -103,7 +103,6 @@ const checkRentalStatusFromDb = async (userId: string, gearItemId: string) => {
      });
 
      return {
-          hasRented: !!existingOrder,
           rentalData: existingOrder || null,
      };
 };
