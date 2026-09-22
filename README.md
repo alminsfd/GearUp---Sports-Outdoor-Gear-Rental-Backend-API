@@ -6,7 +6,7 @@
 
 ## 🔗 Live Links & Deployment
 
-* **Backend Live API:** [https://your-backend.vercel.app](https://your-backend.vercel.app)
+* **Backend Live API:** [Let's go](https://gearrentels.vercel.app)
 * **Postman Collection:** [Postman Collection](https://www.postman.com/tanviralaminhossain-9455647/workspace/gear-items-all-api/collection/56971360-619dbf70-ce6a-4cd0-840e-4bcd545d5b2e?action=share&creator=56971360)
 ---
 ## 🌟 Key Features
